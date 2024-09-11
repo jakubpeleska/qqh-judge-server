@@ -172,6 +172,11 @@ class IsolateTracer(dict):
                 sys_prlimit64: self.handle_prlimit,
                 sys_getdents64: ALLOW,
                 sys_rseq: ALLOW,
+                # python packages
+                sys_sched_setaffinity: ALLOW,
+                sys_clock_nanosleep: ALLOW,
+                sys_vfork: ALLOW,
+                sys_unlink: ALLOW,
             }
         )
 

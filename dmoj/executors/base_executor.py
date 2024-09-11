@@ -254,7 +254,7 @@ class BaseExecutor(metaclass=ExecutorMeta):
         return extra_fs
 
     def get_write_fs(self) -> List[FilesystemAccessRule]:
-        return BASE_WRITE_FILESYSTEM + self.write_fs
+        return BASE_WRITE_FILESYSTEM + self.write_fs + [RecursiveDir(self._dir)]
 
     def get_allowed_syscalls(self) -> List[Union[str, Tuple[str, Any]]]:
         return self.syscalls
@@ -291,6 +291,10 @@ class BaseExecutor(metaclass=ExecutorMeta):
             'LD_PRELOAD': agent,
             'CPTBOX_STDOUT_BUFFER_SIZE': kwargs.get('stdout_buffer_size'),
             'CPTBOX_STDERR_BUFFER_SIZE': kwargs.get('stderr_buffer_size'),
+            'OPENBLAS_NUM_THREADS': '1',
+            'MKL_NUM_THREADS': '1',
+            'OMP_NUM_THREADS': '1',
+            'TMPDIR': self._dir,
         }
         child_env.update(self.get_env())
 
