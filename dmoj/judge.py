@@ -558,7 +558,7 @@ def sanity_check():
             return False
 
         # However running as root on Linux is a Bad Idea
-        if os.getuid() == 0:
+        if os.getuid() == 0 and os.getenv("RUN_AS_ROOT") is None:
             print('running the judge as root is unsafe, please use an unprivileged user instead', file=sys.stderr)
             return False
 
